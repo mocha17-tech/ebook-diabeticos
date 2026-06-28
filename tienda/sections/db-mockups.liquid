@@ -1,0 +1,74 @@
+{{ 'db-styles.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .db-mockups {
+    background-color: {{ section.settings.color_fondo }};
+  }
+  #shopify-section-{{ section.id }} .db-mockups__titulo {
+    font-size: {{ section.settings.titulo_size }}px;
+  }
+{% endstyle %}
+
+<div class="db-mockups">
+  <div class="db-container">
+    <div class="db-mockups__inner">
+
+      <div class="db-mockups__texto db-reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="db-mockups__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="db-titulo db-mockups__titulo">{{ section.settings.titulo }}</h2>
+        <p class="db-mockups__descripcion">{{ section.settings.descripcion | newline_to_br }}</p>
+
+        {%- if section.settings.btn_texto != blank -%}
+          <a href="{{ section.settings.btn_url | default: '#' }}" class="db-btn db-btn--crema">
+            {{ section.settings.btn_texto }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="db-reveal db-reveal--delay-2">
+        {%- if section.settings.imagen != blank -%}
+          <img class="db-mockups__imagen"
+               src="{{ section.settings.imagen | image_url: width: 900 }}"
+               alt="{{ section.settings.imagen.alt | default: 'Mockup dispositivos' | escape }}"
+               loading="lazy">
+        {%- else -%}
+          <img class="db-mockups__imagen"
+               src="{{ 'db-mockups-devices.png' | asset_url }}"
+               alt="Disponible en todos los dispositivos"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'db-scripts.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DB – Mockup dispositivos",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño encima del título", "default": "Llevalo siempre con vos" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "En tu celular, tablet o Kindle" },
+    { "type": "textarea", "id": "descripcion", "label": "Descripción", "default": "Descargás una vez y lo tenés para siempre. Podés leerlo en cualquier dispositivo, imprimirlo o verlo mientras cocinás en la cocina." },
+    { "type": "text", "id": "btn_texto", "label": "Texto del botón" },
+    { "type": "url", "id": "btn_url", "label": "Enlace del botón" },
+    { "type": "image_picker", "id": "imagen", "label": "Imagen de mockup (dispositivos)" },
+    { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#3D5A2A" },
+    { "type": "range", "id": "titulo_size", "label": "Tamaño del título (px)", "min": 24, "max": 60, "step": 2, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 88 }
+  ],
+  "presets": [{ "name": "DB – Mockup dispositivos" }]
+}
+{% endschema %}

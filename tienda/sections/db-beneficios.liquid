@@ -1,0 +1,90 @@
+{{ 'db-styles.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .db-beneficios {
+    background-color: {{ section.settings.color_fondo }};
+  }
+  #shopify-section-{{ section.id }} .db-beneficios__titulo {
+    font-size: {{ section.settings.titulo_size }}px;
+    text-align: {{ section.settings.alineacion }};
+  }
+{% endstyle %}
+
+<div class="db-beneficios">
+  <div class="db-container">
+
+    <div class="db-beneficios__header db-reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="db-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="db-titulo db-beneficios__titulo">{{ section.settings.titulo }}</h2>
+      {%- if section.settings.descripcion != blank -%}
+        <p class="db-beneficios__descripcion">{{ section.settings.descripcion | newline_to_br }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="db-beneficios__grid">
+      {%- for block in section.blocks -%}
+        <div class="db-beneficio-card db-reveal db-reveal--delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <span class="db-beneficio-card__icono">{{ block.settings.icono }}</span>
+          <h3 class="db-beneficio-card__titulo">{{ block.settings.titulo }}</h3>
+          <p class="db-beneficio-card__texto">{{ block.settings.texto | newline_to_br }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+<script src="{{ 'db-scripts.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DB – Beneficios",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "beneficio",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "text", "id": "icono", "label": "Emoji / icono", "default": "🍓" },
+        { "type": "text", "id": "titulo", "label": "Título", "default": "Sin azúcar añadida" },
+        { "type": "textarea", "id": "texto", "label": "Descripción", "default": "Todas las recetas están formuladas sin azúcar refinada, controlando el índice glucémico en cada ingrediente." }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño encima del título", "default": "¿Por qué Dulce Balance?" },
+    { "type": "text", "id": "titulo", "label": "Título de la sección", "default": "Todo lo que necesitás para cocinar sin culpa" },
+    { "type": "textarea", "id": "descripcion", "label": "Descripción (opcional)", "default": "Cada receta fue creada con criterio médico y culinario para que sea deliciosa, práctica y apta para toda la familia." },
+    { "type": "select", "id": "alineacion", "label": "Alineación del encabezado",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ], "default": "center" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#8FAFA8" },
+    { "type": "range", "id": "titulo_size", "label": "Tamaño del título (px)", "min": 24, "max": 60, "step": 2, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 88 }
+  ],
+  "presets": [{
+    "name": "DB – Beneficios",
+    "blocks": [
+      { "type": "beneficio", "settings": { "icono": "🍓", "titulo": "Sin azúcar añadida", "texto": "Todas las recetas están formuladas sin azúcar refinada, controlando el índice glucémico en cada ingrediente." } },
+      { "type": "beneficio", "settings": { "icono": "👨‍👩‍👧", "titulo": "Para toda la familia", "texto": "Los postres son tan ricos que nadie nota la diferencia. La misma receta para todos, sin versiones separadas." } },
+      { "type": "beneficio", "settings": { "icono": "🏅", "titulo": "Avalado por la SAD", "texto": "Respaldado por la Sociedad Argentina de Diabetes, que garantiza la idoneidad nutricional de cada receta." } },
+      { "type": "beneficio", "settings": { "icono": "⏱️", "titulo": "Recetas rápidas y prácticas", "texto": "La mayoría se preparan en menos de 30 minutos con ingredientes que encontrás en cualquier supermercado." } },
+      { "type": "beneficio", "settings": { "icono": "📱", "titulo": "Acceso inmediato", "texto": "Descargás el PDF al instante y podés leerlo en el celular, la tablet, el Kindle o imprimirlo." } },
+      { "type": "beneficio", "settings": { "icono": "🌿", "titulo": "Ingredientes naturales", "texto": "Sin edulcorantes artificiales dudosos. Usamos stevia, eritritol y frutos que la naturaleza ya endulza." } }
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{{ 'db-styles.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .db-confianza {
+    background-color: {{ section.settings.color_fondo }};
+  }
+{% endstyle %}
+
+<div class="db-confianza">
+  <div class="db-container">
+    <div class="db-confianza__inner">
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'cifra' -%}
+          <div class="db-confianza__item" {{ block.shopify_attributes }}>
+            <div>
+              <div class="db-confianza__numero"
+                   data-countup="{{ block.settings.numero }}"
+                   data-suffix="{{ block.settings.sufijo }}">
+                {{ block.settings.numero }}{{ block.settings.sufijo }}
+              </div>
+            </div>
+            <div class="db-confianza__label">{{ block.settings.etiqueta }}</div>
+          </div>
+        {%- elsif block.type == 'sad' -%}
+          <div class="db-confianza__sad" {{ block.shopify_attributes }}>
+            <div class="db-confianza__sad-logo">🏅</div>
+            <div class="db-confianza__sad-texto">
+              <strong>{{ block.settings.titulo }}</strong>
+              {{ block.settings.descripcion }}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'db-scripts.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DB – Banda de confianza",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "cifra",
+      "name": "Cifra estadística",
+      "settings": [
+        { "type": "text", "id": "numero", "label": "Número", "default": "50" },
+        { "type": "text", "id": "sufijo", "label": "Sufijo (p.ej. +, %)", "default": "" },
+        { "type": "text", "id": "etiqueta", "label": "Descripción", "default": "Recetas de postres" }
+      ]
+    },
+    {
+      "type": "sad",
+      "name": "Sello SAD",
+      "settings": [
+        { "type": "text", "id": "titulo", "label": "Título del sello", "default": "Avalado por la SAD" },
+        { "type": "text", "id": "descripcion", "label": "Descripción", "default": "Sociedad Argentina de Diabetes" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#3D5A2A" },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 80, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 80, "step": 8, "unit": "px", "default": 0 }
+  ],
+  "presets": [{
+    "name": "DB – Banda de confianza",
+    "blocks": [
+      { "type": "cifra", "settings": { "numero": "50", "sufijo": "", "etiqueta": "Recetas de postres" } },
+      { "type": "cifra", "settings": { "numero": "100", "sufijo": "%", "etiqueta": "Sin azúcar añadida" } },
+      { "type": "cifra", "settings": { "numero": "5", "sufijo": "★", "etiqueta": "Valoración media" } },
+      { "type": "sad", "settings": { "titulo": "Avalado por la SAD", "descripcion": "Sociedad Argentina de Diabetes" } }
+    ]
+  }]
+}
+{% endschema %}

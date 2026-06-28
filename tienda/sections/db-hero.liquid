@@ -1,0 +1,156 @@
+{{ 'db-styles.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .db-hero__titulo {
+    font-size: {{ section.settings.titulo_size }}px;
+  }
+  #shopify-section-{{ section.id }} .db-hero__descripcion {
+    font-size: {{ section.settings.descripcion_size }}px;
+  }
+  #shopify-section-{{ section.id }} .db-hero {
+    min-height: {{ section.settings.alto_minimo }}vh;
+    background-color: {{ section.settings.color_fondo }};
+  }
+{% endstyle %}
+
+<div class="db-hero">
+
+  {%- if section.settings.video != blank -%}
+    <video class="db-hero__bg-video" autoplay muted loop playsinline>
+      <source src="{{ section.settings.video }}">
+    </video>
+  {%- endif -%}
+
+  {%- if section.settings.botanica_tl != blank -%}
+    <img class="db-hero__botanical db-hero__botanical--tl"
+         src="{{ section.settings.botanica_tl | image_url: width: 600 }}"
+         alt="" loading="eager">
+  {%- else -%}
+    <img class="db-hero__botanical db-hero__botanical--tl"
+         src="{{ 'db-botanica-tl.png' | asset_url }}"
+         alt="" loading="eager"
+         onerror="this.style.display='none'">
+  {%- endif -%}
+
+  {%- if section.settings.botanica_br != blank -%}
+    <img class="db-hero__botanical db-hero__botanical--br"
+         src="{{ section.settings.botanica_br | image_url: width: 600 }}"
+         alt="" loading="lazy">
+  {%- else -%}
+    <img class="db-hero__botanical db-hero__botanical--br"
+         src="{{ 'db-botanica-br.png' | asset_url }}"
+         alt="" loading="lazy"
+         onerror="this.style.display='none'">
+  {%- endif -%}
+
+  <div class="db-container">
+    <div class="db-hero__inner">
+
+      <!-- TEXTO -->
+      <div class="db-hero__texto">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="db-eyebrow db-hero__eyebrow db-reveal">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        <h1 class="db-titulo db-hero__titulo db-reveal db-reveal--delay-1">
+          {{ section.settings.titulo }}
+        </h1>
+
+        {%- if section.settings.subtitulo != blank -%}
+          <p class="db-hero__subtitulo db-reveal db-reveal--delay-2">{{ section.settings.subtitulo }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.descripcion != blank -%}
+          <p class="db-hero__descripcion db-reveal db-reveal--delay-2">
+            {{ section.settings.descripcion | newline_to_br }}
+          </p>
+        {%- endif -%}
+
+        <div class="db-hero__acciones db-reveal db-reveal--delay-3">
+          <a href="{{ section.settings.btn_url | default: '#' }}" class="db-btn db-btn--crema">
+            {{ section.settings.btn_texto }}
+          </a>
+          {%- if section.settings.precio_hint != blank -%}
+            <span class="db-hero__precio-hint">{{ section.settings.precio_hint }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- PRODUCTO -->
+      <div class="db-hero__producto db-reveal db-reveal--delay-2">
+        {%- if section.settings.imagen_producto != blank -%}
+          <img class="db-hero__libro"
+               src="{{ section.settings.imagen_producto | image_url: width: 900 }}"
+               alt="{{ section.settings.imagen_producto.alt | default: section.settings.titulo | escape }}"
+               loading="eager"
+               fetchpriority="high">
+        {%- else -%}
+          <img class="db-hero__libro"
+               src="{{ 'db-libro-mockup.png' | asset_url }}"
+               alt="{{ section.settings.titulo | escape }}"
+               loading="eager"
+               fetchpriority="high"
+               onerror="this.style.display='none'">
+        {%- endif -%}
+
+        {%- if section.settings.mostrar_badge_sad -%}
+          <div class="db-hero__sad-badge">
+            <span class="db-hero__sad-badge-icon">🏅</span>
+            <div class="db-hero__sad-badge-text">
+              {{ section.settings.badge_sad_texto | newline_to_br }}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+
+  {%- if section.settings.tagline != blank -%}
+    <div class="db-hero__tagline">{{ section.settings.tagline }}</div>
+  {%- endif -%}
+
+</div>
+
+<script src="{{ 'db-scripts.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DB – Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Textos principales" },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño sobre el título", "default": "eBook Digital · PDF" },
+    { "type": "text", "id": "titulo", "label": "Título principal", "default": "Dulce Balance" },
+    { "type": "text", "id": "subtitulo", "label": "Subtítulo en mayúsculas", "default": "Recetas para Diabéticos" },
+    { "type": "textarea", "id": "descripcion", "label": "Descripción breve", "default": "50 postres deliciosos, saludables y aptos para toda la familia. Avalado por la Sociedad Argentina de Diabetes." },
+    { "type": "text", "id": "tagline", "label": "Frase inferior (centrada)", "default": "Cuidado por la salud, disfrute en cada receta" },
+    { "type": "header", "content": "Botón de compra" },
+    { "type": "text", "id": "btn_texto", "label": "Texto del botón", "default": "Quiero mi ebook →" },
+    { "type": "url", "id": "btn_url", "label": "Enlace del botón" },
+    { "type": "text", "id": "precio_hint", "label": "Texto al lado del botón (precio/oferta)", "default": "Solo $XX — Descarga inmediata" },
+    { "type": "header", "content": "Imágenes" },
+    { "type": "image_picker", "id": "imagen_producto", "label": "Foto del libro / mockup (principal)" },
+    { "type": "image_picker", "id": "botanica_tl", "label": "Decoración botánica (esquina superior izquierda)" },
+    { "type": "image_picker", "id": "botanica_br", "label": "Decoración botánica (esquina inferior derecha)" },
+    { "type": "header", "content": "Vídeo de fondo (opcional)" },
+    { "type": "text", "id": "video", "label": "URL del vídeo de fondo (MP4)", "info": "Para mejor resultado usa un vídeo oscuro o de fondo neutro" },
+    { "type": "header", "content": "Sello SAD" },
+    { "type": "checkbox", "id": "mostrar_badge_sad", "label": "Mostrar sello 'Avalado por la SAD'", "default": true },
+    { "type": "textarea", "id": "badge_sad_texto", "label": "Texto del sello", "default": "Avalado por\nla SAD" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#8FAFA8" },
+    { "type": "range", "id": "alto_minimo", "label": "Altura mínima (%)", "min": 60, "max": 100, "step": 5, "unit": "vh", "default": 100 },
+    { "type": "range", "id": "titulo_size", "label": "Tamaño del título (px)", "min": 32, "max": 90, "step": 2, "unit": "px", "default": 64 },
+    { "type": "range", "id": "descripcion_size", "label": "Tamaño del texto (px)", "min": 14, "max": 24, "step": 1, "unit": "px", "default": 17 },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "DB – Hero" }]
+}
+{% endschema %}

@@ -1,0 +1,123 @@
+{{ 'db-styles.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .db-para-quien {
+    background-color: {{ section.settings.color_fondo }};
+  }
+  #shopify-section-{{ section.id }} .db-para-quien__titulo {
+    font-size: {{ section.settings.titulo_size }}px;
+  }
+  #shopify-section-{{ section.id }} .db-para-quien__descripcion {
+    font-size: {{ section.settings.texto_size }}px;
+  }
+  {%- if section.settings.imagen_derecha -%}
+  #shopify-section-{{ section.id }} .db-para-quien__inner {
+    direction: rtl;
+  }
+  #shopify-section-{{ section.id }} .db-para-quien__imagen-wrap,
+  #shopify-section-{{ section.id }} .db-para-quien__contenido {
+    direction: ltr;
+  }
+  {%- endif -%}
+{% endstyle %}
+
+<div class="db-para-quien">
+  <div class="db-container">
+    <div class="db-para-quien__inner">
+
+      <div class="db-para-quien__imagen-wrap db-reveal">
+        {%- if section.settings.imagen != blank -%}
+          <img class="db-para-quien__imagen"
+               src="{{ section.settings.imagen | image_url: width: 900 }}"
+               alt="{{ section.settings.imagen.alt | default: section.settings.titulo | escape }}"
+               loading="lazy">
+        {%- else -%}
+          <img class="db-para-quien__imagen"
+               src="{{ 'db-para-quien.jpg' | asset_url }}"
+               alt=""
+               loading="lazy"
+               onerror="this.style.display='none'">
+        {%- endif -%}
+      </div>
+
+      <div class="db-para-quien__contenido">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="db-eyebrow db-reveal">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+
+        <h2 class="db-titulo db-para-quien__titulo db-reveal db-reveal--delay-1">
+          {{ section.settings.titulo }}
+        </h2>
+
+        {%- if section.settings.descripcion != blank -%}
+          <p class="db-para-quien__descripcion db-reveal db-reveal--delay-2">
+            {{ section.settings.descripcion | newline_to_br }}
+          </p>
+        {%- endif -%}
+
+        <ul class="db-para-quien__lista db-reveal db-reveal--delay-3">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>{{ block.settings.item }}</li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.btn_texto != blank -%}
+          <a href="{{ section.settings.btn_url | default: '#' }}" class="db-btn db-btn--primario db-reveal db-reveal--delay-4">
+            {{ section.settings.btn_texto }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'db-scripts.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DB – Para quién es",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Punto de la lista",
+      "settings": [
+        { "type": "text", "id": "item", "label": "Texto", "default": "Personas con diabetes tipo 1 o tipo 2" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "header", "content": "Textos" },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño encima del título", "default": "¿Para quién es?" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Una vida dulce, sin renunciar a la salud" },
+    { "type": "textarea", "id": "descripcion", "label": "Descripción", "default": "Dulce Balance nació para demostrar que comer rico y cuidar el azúcar no son opuestos. Cada receta está pensada para que toda la familia disfrute junta, sin tener que cocinar dos versiones." },
+    { "type": "header", "content": "Botón (opcional)" },
+    { "type": "text", "id": "btn_texto", "label": "Texto del botón" },
+    { "type": "url", "id": "btn_url", "label": "Enlace del botón" },
+    { "type": "header", "content": "Imagen" },
+    { "type": "image_picker", "id": "imagen", "label": "Imagen (mujer leyendo / momento de uso)" },
+    { "type": "checkbox", "id": "imagen_derecha", "label": "Mostrar imagen a la derecha", "default": false },
+    { "type": "header", "content": "Diseño" },
+    { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#F5F0E5" },
+    { "type": "range", "id": "titulo_size", "label": "Tamaño del título (px)", "min": 24, "max": 60, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "texto_size", "label": "Tamaño del texto (px)", "min": 14, "max": 22, "step": 1, "unit": "px", "default": 17 },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 88 }
+  ],
+  "presets": [{
+    "name": "DB – Para quién es",
+    "blocks": [
+      { "type": "item", "settings": { "item": "Personas con diabetes tipo 1 o tipo 2" } },
+      { "type": "item", "settings": { "item": "Familias que quieren comer más sano sin sacrificar el sabor" } },
+      { "type": "item", "settings": { "item": "Quienes buscan recetas sin azúcar certificadas por especialistas" } },
+      { "type": "item", "settings": { "item": "Amantes de los postres que cuidan su glucemia" } }
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,83 @@
+{{ 'db-styles.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .db-cta-final {
+    background-color: {{ section.settings.color_fondo }};
+  }
+  #shopify-section-{{ section.id }} .db-cta-final__titulo {
+    font-size: {{ section.settings.titulo_size }}px;
+  }
+{% endstyle %}
+
+<div class="db-cta-final">
+
+  <img class="db-cta-final__deco-tl"
+       src="{{ 'db-botanica-tl.png' | asset_url }}"
+       alt="" loading="lazy"
+       onerror="this.style.display='none'">
+
+  <img class="db-cta-final__deco-br"
+       src="{{ 'db-botanica-br.png' | asset_url }}"
+       alt="" loading="lazy"
+       onerror="this.style.display='none'">
+
+  <div class="db-container">
+    <div class="db-cta-final__inner db-reveal">
+
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="db-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h2 class="db-titulo db-cta-final__titulo">{{ section.settings.titulo }}</h2>
+
+      <p class="db-cta-final__descripcion">{{ section.settings.descripcion | newline_to_br }}</p>
+
+      {%- if section.settings.precio != blank -%}
+        <div class="db-cta-final__precio-wrap">
+          {%- if section.settings.precio_antes != blank -%}
+            <span class="db-cta-final__precio-antes">{{ section.settings.precio_antes }}</span>
+          {%- endif -%}
+          <span class="db-cta-final__precio">{{ section.settings.precio }}</span>
+        </div>
+      {%- endif -%}
+
+      <a href="{{ section.settings.btn_url | default: '#' }}" class="db-btn db-btn--primario">
+        {{ section.settings.btn_texto }}
+      </a>
+
+      {%- if section.settings.garantia != blank -%}
+        <p class="db-cta-final__garantia">🔒 {{ section.settings.garantia }}</p>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'db-scripts.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DB – CTA Final (compra)",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño encima del título", "default": "¿Lista para empezar?" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Tu vida más dulce empieza hoy" },
+    { "type": "textarea", "id": "descripcion", "label": "Descripción", "default": "Descargá Dulce Balance ahora y descubrí que los postres ricos y saludables no solo existen: son una realidad deliciosa y avalada por expertos." },
+    { "type": "text", "id": "precio_antes", "label": "Precio anterior (tachado)", "default": "$XX" },
+    { "type": "text", "id": "precio", "label": "Precio actual", "default": "$XX" },
+    { "type": "text", "id": "btn_texto", "label": "Texto del botón", "default": "Quiero mi ebook ahora →" },
+    { "type": "url", "id": "btn_url", "label": "Enlace del botón" },
+    { "type": "text", "id": "garantia", "label": "Texto de garantía", "default": "Garantía de devolución 7 días · Descarga inmediata · PDF incluido" },
+    { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#8FAFA8" },
+    { "type": "range", "id": "titulo_size", "label": "Tamaño del título (px)", "min": 24, "max": 80, "step": 2, "unit": "px", "default": 52 },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 104 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 104 }
+  ],
+  "presets": [{ "name": "DB – CTA Final (compra)" }]
+}
+{% endschema %}

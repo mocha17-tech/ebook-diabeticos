@@ -1,0 +1,80 @@
+{{ 'db-styles.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .db-faq {
+    background-color: {{ section.settings.color_fondo }};
+  }
+  #shopify-section-{{ section.id }} .db-faq__titulo {
+    font-size: {{ section.settings.titulo_size }}px;
+  }
+{% endstyle %}
+
+<div class="db-faq">
+  <div class="db-container--narrow">
+
+    <div class="db-faq__header db-reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="db-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="db-titulo db-faq__titulo">{{ section.settings.titulo }}</h2>
+    </div>
+
+    <div class="db-faq__lista db-reveal db-reveal--delay-1">
+      {%- for block in section.blocks -%}
+        <div class="db-faq-item" {{ block.shopify_attributes }}>
+          <button class="db-faq-item__pregunta" aria-expanded="false">
+            {{ block.settings.pregunta }}
+            <span class="db-faq-item__icono" aria-hidden="true">+</span>
+          </button>
+          <div class="db-faq-item__respuesta">
+            <p class="db-faq-item__respuesta-inner">{{ block.settings.respuesta | newline_to_br }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+<script src="{{ 'db-scripts.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DB – Preguntas frecuentes",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "pregunta", "label": "Pregunta", "default": "¿El ebook es para diabetes tipo 1 y tipo 2?" },
+        { "type": "textarea", "id": "respuesta", "label": "Respuesta", "default": "Sí, las recetas son aptas para ambos tipos. Siempre te recomendamos consultar con tu médico las porciones según tu plan de alimentación personal." }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño encima del título", "default": "Tus dudas, resueltas" },
+    { "type": "text", "id": "titulo", "label": "Título de la sección", "default": "Preguntas frecuentes" },
+    { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#F9F7F4" },
+    { "type": "range", "id": "titulo_size", "label": "Tamaño del título (px)", "min": 24, "max": 60, "step": 2, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 88 }
+  ],
+  "presets": [{
+    "name": "DB – Preguntas frecuentes",
+    "blocks": [
+      { "type": "item", "settings": { "pregunta": "¿El ebook es para diabetes tipo 1 y tipo 2?", "respuesta": "Sí, las recetas son aptas para ambos tipos. Siempre recomendamos consultar con tu médico las porciones según tu plan de alimentación personal." } },
+      { "type": "item", "settings": { "pregunta": "¿Cómo recibo el ebook después de comprarlo?", "respuesta": "Al completar el pago recibirás un correo con el enlace de descarga. También podés acceder desde tu cuenta en la tienda. El PDF es tuyo para siempre." } },
+      { "type": "item", "settings": { "pregunta": "¿Las recetas son aptas para toda la familia?", "respuesta": "Absolutamente. Son tan ricas que nadie notará que no llevan azúcar. Podés servir el mismo postre para todos sin hacer versiones separadas." } },
+      { "type": "item", "settings": { "pregunta": "¿Qué significa que está avalado por la SAD?", "respuesta": "La Sociedad Argentina de Diabetes revisó y aprobó el contenido nutricional del ebook. Eso garantiza que las recetas son seguras y coherentes con las recomendaciones médicas para personas con diabetes." } },
+      { "type": "item", "settings": { "pregunta": "¿Puedo imprimirlo o solo es digital?", "respuesta": "Podés hacer las dos cosas. El PDF viene listo para imprimir en tamaño A4 o carta. También podés leerlo en el celular, tablet, Kindle o en la computadora." } },
+      { "type": "item", "settings": { "pregunta": "¿Tienen política de devolución?", "respuesta": "Sí. Si en 7 días no estás satisfecha con el contenido, te devolvemos el dinero sin preguntas. Escribinos a nuestro correo de contacto." } }
+    ]
+  }]
+}
+{% endschema %}
