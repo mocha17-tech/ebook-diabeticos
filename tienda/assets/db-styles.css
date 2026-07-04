@@ -1039,5 +1039,67 @@
   opacity: 0.8;
 }
 
+/* === Countdown urgencia === */
+.db-countdown-wrap {
+  margin-bottom: 32px;
+}
+
+.db-countdown-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--db-verde);
+  opacity: 0.75;
+  margin-bottom: 10px;
+}
+
+.db-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--db-verde);
+  border-radius: var(--db-radio);
+  padding: 14px 24px;
+}
+
+.db-countdown__bloque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 52px;
+}
+
+.db-countdown__num {
+  font-family: var(--db-serif);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--db-crema);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.db-countdown__etiq {
+  font-family: var(--db-sans);
+  font-size: 0.62rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--db-crema);
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+.db-countdown__sep {
+  font-family: var(--db-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--db-crema);
+  opacity: 0.4;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
 /* Fix franja blanca del header Dawn */
 .section-header { margin-bottom: 0 !important; }
