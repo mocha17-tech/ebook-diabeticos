@@ -13,6 +13,12 @@
   }
 {% endstyle %}
 
+{%- if section.settings.mostrar_contador and section.settings.urgencia_texto != blank -%}
+  <div class="db-urgency-strip">
+    <span class="db-urgency-strip__text">{{ section.settings.urgencia_texto }}</span>
+  </div>
+{%- endif -%}
+
 <div class="db-cta-final">
 
   <img class="db-cta-final__deco-tl"
@@ -64,6 +70,9 @@
               <span class="db-countdown__etiq">seg</span>
             </div>
           </div>
+          {%- if section.settings.contador_sublabel != blank -%}
+            <p class="db-countdown-sublabel">{{ section.settings.contador_sublabel }}</p>
+          {%- endif -%}
         </div>
       {%- endif -%}
 
@@ -96,7 +105,9 @@
     { "type": "text", "id": "garantia", "label": "Texto de garantía", "default": "Garantía de devolución 7 días · Descarga inmediata · PDF incluido" },
     { "type": "header", "content": "Contador de urgencia" },
     { "type": "checkbox", "id": "mostrar_contador", "label": "Mostrar contador 24hs", "default": true },
-    { "type": "text", "id": "contador_label", "label": "Texto encima del contador", "default": "⏳ Oferta válida por solo:" },
+    { "type": "text", "id": "urgencia_texto", "label": "Texto franja roja superior", "default": "⚡ OFERTA RELÁMPAGO — Solo por 24 horas · Precio especial de lanzamiento" },
+    { "type": "text", "id": "contador_label", "label": "Texto encima del contador", "default": "⏳ La oferta se termina en:" },
+    { "type": "text", "id": "contador_sublabel", "label": "Texto debajo del contador", "default": "El precio sube cuando el contador llegue a cero" },
     { "type": "header", "content": "Diseño" },
     { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#8FAFA8" },
     { "type": "range", "id": "titulo_size", "label": "Tamaño del título (px)", "min": 24, "max": 80, "step": 2, "unit": "px", "default": 52 },
