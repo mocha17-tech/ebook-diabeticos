@@ -1,10 +1,14 @@
 # Estado del proyecto — Dulce Balance
 
-- Tienda: fxzm4y-yj.myshopify.com
+- Tienda: dulce-balance-store.myshopify.com
 - Carpeta: /home/user/ebook-diabeticos/tienda/
 - Tema base: Dawn (descargado 2026-06-28)
 - Entorno: Node 22.22.2, Shopify CLI 4.3.0 — OK
-- Última publicación: (pendiente)
+- Última publicación: 2026-07-04 — 4 archivos subidos al tema "Copia de Dulce Balance" (ID 160555532526, sin publicar)
+  - `sections/db-cta-final.liquid` (contador rediseñado + precios)
+  - `templates/index.json` (precios $6.999 / $12.999)
+  - `assets/db-scripts.js` (countdown evergreen 24hs)
+  - `assets/db-styles.css` (estilos del contador rediseñado)
 
 ## Fases completadas
 
