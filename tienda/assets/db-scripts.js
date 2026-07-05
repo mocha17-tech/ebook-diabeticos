@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
   initReveal();
   initFaq();
   initCountUp();
-  initCountdown();
 });
 
 /* === Reveal al hacer scroll === */
@@ -72,46 +71,4 @@ function initCountUp() {
   );
 
   nums.forEach(function (el) { obs.observe(el); });
-}
-
-/* === Countdown evergreen 24hs === */
-function initCountdown() {
-  var el = document.getElementById('db-countdown');
-  if (!el) return;
-
-  var KEY = 'db_countdown_expiry';
-  var DURACION = 24 * 60 * 60 * 1000; // 24 horas en ms
-
-  var expiry = parseInt(localStorage.getItem(KEY) || '0', 10);
-  var ahora = Date.now();
-
-  if (!expiry || ahora >= expiry) {
-    expiry = ahora + DURACION;
-    localStorage.setItem(KEY, String(expiry));
-  }
-
-  var hh = el.querySelector('[data-cd="hh"]');
-  var mm = el.querySelector('[data-cd="mm"]');
-  var ss = el.querySelector('[data-cd="ss"]');
-
-  function actualizar() {
-    var restante = Math.max(0, expiry - Date.now());
-
-    if (restante === 0) {
-      expiry = Date.now() + DURACION;
-      localStorage.setItem(KEY, String(expiry));
-      restante = DURACION;
-    }
-
-    var h = Math.floor(restante / 3600000);
-    var m = Math.floor((restante % 3600000) / 60000);
-    var s = Math.floor((restante % 60000) / 1000);
-
-    if (hh) hh.textContent = String(h).padStart(2, '0');
-    if (mm) mm.textContent = String(m).padStart(2, '0');
-    if (ss) ss.textContent = String(s).padStart(2, '0');
-  }
-
-  actualizar();
-  setInterval(actualizar, 1000);
 }
