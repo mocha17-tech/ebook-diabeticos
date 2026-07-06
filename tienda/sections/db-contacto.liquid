@@ -1,0 +1,66 @@
+{{ 'db-styles.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .db-contacto {
+    background-color: {{ section.settings.color_fondo }};
+  }
+{% endstyle %}
+
+<div class="db-contacto">
+  <div class="db-container--narrow">
+    <div class="db-contacto__inner db-reveal">
+
+      {%- if section.settings.icono != blank -%}
+        <div class="db-contacto__icono">{{ section.settings.icono }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="db-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h2 class="db-titulo db-contacto__titulo">{{ section.settings.titulo }}</h2>
+
+      {%- if section.settings.descripcion != blank -%}
+        <p class="db-contacto__descripcion">{{ section.settings.descripcion | newline_to_br }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.email != blank -%}
+        <a class="db-contacto__email" href="mailto:{{ section.settings.email }}">
+          {{ section.settings.email }}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.horario != blank -%}
+        <p class="db-contacto__horario">{{ section.settings.horario }}</p>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'db-scripts.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DB – Contacto",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "icono", "label": "Emoji decorativo", "default": "💌" },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeño encima del título", "default": "¿Tenés alguna duda?" },
+    { "type": "text", "id": "titulo", "label": "Título", "default": "Estamos para ayudarte" },
+    { "type": "textarea", "id": "descripcion", "label": "Descripción", "default": "Si tenés preguntas sobre el ebook, problemas con la descarga, o necesitás asistencia, escribinos y te respondemos a la brevedad." },
+    { "type": "text", "id": "email", "label": "Email de contacto", "default": "dulcebalance.soporte@gmail.com" },
+    { "type": "text", "id": "horario", "label": "Horario de atención (opcional)", "default": "Respondemos de lunes a viernes, de 9 a 18 hs (hora Argentina)" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#3D5A2A" },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ],
+  "presets": [{ "name": "DB – Contacto" }]
+}
+{% endschema %}

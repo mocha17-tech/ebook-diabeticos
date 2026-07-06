@@ -1039,5 +1039,240 @@
   opacity: 0.8;
 }
 
+/* ── Countdown Timer ─────────────────────────────── */
+.db-countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.db-countdown__label-top {
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--db-crema);
+  opacity: 0.75;
+  margin-bottom: 12px;
+}
+
+.db-countdown__units {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.db-countdown__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.db-countdown__digits {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--db-serif);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #fff;
+  min-width: 60px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.db-countdown__unit-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--db-crema);
+  opacity: 0.65;
+}
+
+.db-countdown__sep {
+  font-family: var(--db-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  padding-bottom: 18px;
+  line-height: 1;
+}
+
+/* ── Sección SAD ─────────────────────────────────── */
+.db-sad {
+  position: relative;
+}
+
+.db-sad__inner {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .db-sad__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+}
+
+.db-sad__sello-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.db-sad__sello-img {
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.12));
+}
+
+.db-sad__sello-placeholder {
+  width: 180px;
+  height: 180px;
+  background: var(--db-verde);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 4px solid rgba(255,255,255,0.3);
+  box-shadow: 0 12px 40px rgba(61,90,42,0.25);
+}
+
+.db-sad__sello-icono {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.db-sad__sello-texto-badge {
+  font-family: var(--db-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--db-crema);
+  letter-spacing: 0.1em;
+}
+
+.db-sad__eyebrow {
+  color: var(--db-verde);
+}
+
+.db-sad__titulo {
+  color: var(--db-verde-oscuro, #2A3D1E);
+  margin-bottom: 16px;
+}
+
+.db-sad__descripcion {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--db-texto);
+  margin-bottom: 28px;
+  opacity: 0.88;
+}
+
+.db-sad__puntos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .db-sad__puntos { align-items: center; }
+}
+
+.db-sad__punto {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.97rem;
+  color: var(--db-texto);
+}
+
+.db-sad__punto-icono {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: var(--db-verde);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* ── Sección Contacto ────────────────────────────── */
+.db-contacto {
+  position: relative;
+}
+
+.db-contacto__inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.db-contacto__icono {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.db-contacto__titulo {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: var(--db-crema);
+  margin-bottom: 16px;
+}
+
+.db-contacto__descripcion {
+  font-size: 1.05rem;
+  color: var(--db-crema);
+  opacity: 0.85;
+  line-height: 1.75;
+  max-width: 540px;
+  margin-bottom: 32px;
+}
+
+.db-contacto__email {
+  display: inline-block;
+  font-family: var(--db-serif);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 600;
+  color: var(--db-crema);
+  text-decoration: none;
+  border-bottom: 2px solid rgba(247,243,235,0.4);
+  padding-bottom: 4px;
+  transition: border-color 0.2s, color 0.2s;
+  margin-bottom: 20px;
+  word-break: break-all;
+}
+
+.db-contacto__email:hover {
+  color: #fff;
+  border-color: rgba(247,243,235,0.9);
+}
+
+.db-contacto__horario {
+  font-size: 0.85rem;
+  color: var(--db-crema);
+  opacity: 0.55;
+  letter-spacing: 0.04em;
+}
+
 /* Fix franja blanca del header Dawn */
 .section-header { margin-bottom: 0 !important; }

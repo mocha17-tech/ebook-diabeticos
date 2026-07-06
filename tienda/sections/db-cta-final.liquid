@@ -36,6 +36,53 @@
 
       <p class="db-cta-final__descripcion">{{ section.settings.descripcion | newline_to_br }}</p>
 
+      {%- if section.settings.mostrar_countdown -%}
+        <div class="db-countdown">
+          <div>
+            <p class="db-countdown__label-top">{{ section.settings.countdown_label }}</p>
+            <div class="db-countdown__units">
+              <div class="db-countdown__unit">
+                <div class="db-countdown__digits" id="db-cd-h">00</div>
+                <div class="db-countdown__unit-label">Horas</div>
+              </div>
+              <div class="db-countdown__sep">:</div>
+              <div class="db-countdown__unit">
+                <div class="db-countdown__digits" id="db-cd-m">00</div>
+                <div class="db-countdown__unit-label">Minutos</div>
+              </div>
+              <div class="db-countdown__sep">:</div>
+              <div class="db-countdown__unit">
+                <div class="db-countdown__digits" id="db-cd-s">00</div>
+                <div class="db-countdown__unit-label">Segundos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          (function() {
+            var key = 'db_cd_end';
+            var dur = {{ section.settings.countdown_horas | default: 24 }} * 3600 * 1000;
+            var end = parseInt(localStorage.getItem(key) || '0');
+            if (!end || end < Date.now()) {
+              end = Date.now() + dur;
+              localStorage.setItem(key, end);
+            }
+            function pad(n) { return String(n).padStart(2, '0'); }
+            function tick() {
+              var diff = Math.max(0, end - Date.now());
+              var h = Math.floor(diff / 3600000);
+              var m = Math.floor((diff % 3600000) / 60000);
+              var s = Math.floor((diff % 60000) / 1000);
+              document.getElementById('db-cd-h').textContent = pad(h);
+              document.getElementById('db-cd-m').textContent = pad(m);
+              document.getElementById('db-cd-s').textContent = pad(s);
+              if (diff > 0) setTimeout(tick, 1000);
+            }
+            tick();
+          })();
+        </script>
+      {%- endif -%}
+
       {%- if section.settings.precio != blank -%}
         <div class="db-cta-final__precio-wrap">
           {%- if section.settings.precio_antes != blank -%}
@@ -72,6 +119,10 @@
     { "type": "text", "id": "btn_texto", "label": "Texto del botón", "default": "Quiero mi ebook ahora →" },
     { "type": "url", "id": "btn_url", "label": "Enlace del botón" },
     { "type": "text", "id": "garantia", "label": "Texto de garantía", "default": "Garantía de devolución 7 días · Descarga inmediata · PDF incluido" },
+    { "type": "header", "content": "Contador de urgencia" },
+    { "type": "checkbox", "id": "mostrar_countdown", "label": "Mostrar reloj regresivo", "default": true },
+    { "type": "text", "id": "countdown_label", "label": "Texto sobre el reloj", "default": "⚡ Oferta especial — tiempo restante" },
+    { "type": "range", "id": "countdown_horas", "label": "Duración (horas)", "min": 1, "max": 72, "step": 1, "unit": "h", "default": 24 },
     { "type": "color", "id": "color_fondo", "label": "Color de fondo", "default": "#8FAFA8" },
     { "type": "range", "id": "titulo_size", "label": "Tamaño del título (px)", "min": 24, "max": 80, "step": 2, "unit": "px", "default": 52 },
     { "type": "header", "content": "Espaciado" },
